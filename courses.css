@@ -1,0 +1,57 @@
+ .sidebar { width: 240px; min-width: 240px; background-color: #111827; border-right: 1px solid #1f2937; padding: 25px 20px; }
+.sidebar ul { list-style: none; }
+        .sidebar ul li { margin-bottom: 10px; }
+        .sidebar ul li a { color: #9ca3af; text-decoration: none; padding: 10px; display: block; border-radius: 6px; }
+        .sidebar ul li a:hover, .sidebar ul li a.active { background-color: #1f2937; color: #10b981; }
+ .sidebar .logo { font-size: 20px; font-weight: bold; color: #10b981; margin-bottom: 30px; }
+body{
+    background-color: #111827;
+    font-family:JetBrains Mono, monospace;
+}        
+
+ .page-container {
+  display: flex;
+  min-height: 100vh;
+}
+.main-content { 
+  justify-content: center;
+  flex-grow: 1;
+  margin-left: 250px;
+  padding: 40px;
+}
+.main-content h1 { 
+    color: #10b981;
+}
+.course_grid{
+  flex-grow: 1; display: grid; gap: 100px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+.course_header h2{
+  text-align: center;
+  color:white;
+}
+.course_progress{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.course_progress button{
+  color:#1f2937;
+  background-color: #10b981;
+  border-radius: 15px;
+}
+.course_progress h3{
+  color:#9ca3af;
+}
+.course_card{
+  border-radius: 15px;
+  border-color: #10b981;
+  background-color: #1f2937;
+  width: 300px;
+  height: 150px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
