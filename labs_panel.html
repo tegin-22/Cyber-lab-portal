@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labs Panel</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: monospace; }
+        body { background-color: #0b0f19; color: #e2e8f0; }
+        .labs-section h2 { font-size: 18px; margin-bottom: 15px; color: #ffffff; }
+        .labs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 15px; }
+        .lab-card { background-color: #111827; border: 1px solid #1f2937; padding: 18px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
+        .lab-info-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
+        .lab-name { font-size: 15px; font-weight: bold; }
+        .status-badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: bold; }
+        .status-online { background-color: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .status-pending { background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .lab-meta { font-size: 13px; color: #9ca3af; margin-bottom: 15px; }
+        .lab-meta div { margin-bottom: 4px; }
+        .launch-btn { background-color: #10b981; color: #0b0f19; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; text-align: center; width: 100%; }
+        .launch-btn:hover { background-color: #059669; }
+        
+        .active-lab-container { display: none; background-color: #111827; border: 1px solid #1f2937; padding: 20px; border-radius: 8px; }
+        .lab-header { display: flex; justify-content: space-between; margin-bottom: 15px; align-items: center; }
+        .back-btn { background-color: #374151; color: #ffffff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+        .back-btn:hover { background-color: #4b5563; }
+        .mock-terminal { background-color: #05070c; border: 1px solid #1f2937; padding: 15px; border-radius: 6px; min-height: 180px; color: #10b981; margin-top: 10px; }
+        .mock-terminal input { background: transparent; border: none; color: #38bdf8; outline: none; font-family: monospace; font-size: 14px; width: 70%; }
+    </style>
+</head>
+<body>
+    <div class="labs-section" id="list-view">
+        <h2>Aktiv Laboratoriyalar</h2>
+        <div class="labs-grid">
+            <div class="lab-card">
+                <div class="lab-info-header">
+                    <span class="lab-name">SQL Injection Advanced</span>
+                    <span class="status-badge status-online">Online</span>
+                </div>
+                <div class="lab-meta">
+                    <div><strong>Çətinlik:</strong> Orta</div>
+                    <div><strong>Target IP:</strong> 10.10.12.45</div>
+                </div>
+                <button class="launch-btn" onclick="startLab('SQL Injection Advanced', '10.10.12.45')">Launch</button>
+            </div>
+            <div class="lab-card">
+                <div class="lab-info-header">
+                    <span class="lab-name">Buffer Overflow Part 1</span>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                <div class="lab-meta">
+                    <div><strong>Çətinlik:</strong> Çətin</div>
+                    <div><strong>Target IP:</strong> 10.10.12.89</div>
+                </div>
+                <button class="launch-btn" onclick="startLab('Buffer Overflow Part 1', '10.10.12.89')">Launch</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="active-lab-container" id="lab-view">
+        <div class="lab-header">
+            <h2 id="active-lab-title">Lab Sessiynası</h2>
+            <button class="back-btn" onclick="closeLab()">Geri</button>
+        </div>
+        <p style="font-size: 14px; color: #9ca3af; margin-bottom: 10px;">Hədəf IP: <span id="active-lab-ip" style="color: #38bdf8;"></span></p>
+        <div class="mock-terminal">
+            <p style="color: #6b7280; margin-bottom: 10px;">[Sistem başladıldı. Komandaları daxil edin...]</p>
+            <p>root@cyberguard-sandbox:~# <input type="text" placeholder="Komanda yazın..." id="term-input" onkeydown="handleCommand(event)"></p>
+            <p id="term-output" style="margin-top: 10px; color: #38bdf8;"></p>
+        </div>
+    </div>
+
+    <script>
+        function startLab(name, ip) {
+            document.getElementById('list-view').style.display = 'none';
+            document.getElementById('lab-view').style.display = 'block';
+            document.getElementById('active-lab-title').innerText = name;
+            document.getElementById('active-lab-ip').innerText = ip;
+            document.getElementById('term-output').innerText = '';
+            document.getElementById('term-input').value = '';
+        }
+
+        function closeLab() {
+            document.getElementById('lab-view').style.display = 'none';
+            document.getElementById('list-view').style.display = 'block';
+        }
+
+        function handleCommand(e) {
+            if (e.key === 'Enter') {
+                let val = document.getElementById('term-input').value;
+                let output = document.getElementById('term-output');
+                if(val.toLowerCase() === 'help') {
+                    output.innerText = "Mövcud komandalar: nmap, cat flag.txt, clear";
+                } else if(val.toLowerCase() === 'cat flag.txt') {
+                    output.innerText = "FLAG{cYbEr_GuArD_lAb_SuCcEsS}";
+                } else if(val.toLowerCase() === 'nmap') {
+                    output.innerText = "Scanning ports... Port 80 (HTTP) - OPEN";
+                } else if(val.toLowerCase() === 'clear') {
+                    output.innerText = "";
+                } else {
+                    output.innerText = "Komanda tapılmadı. Kömək üçün 'help' yazın.";
+                }
+                document.getElementById('term-input').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
