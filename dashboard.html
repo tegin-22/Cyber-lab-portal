@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberGuard Dashboard</title>
+    <title>CyberGuard Mobile & Web Dashboard</title>
     
     <style>
         * {
@@ -110,7 +110,8 @@
         }
 
         .skills-section h2, 
-        .console-section h2 {
+        .console-section h2,
+        .labs-section h2 {
             font-size: 18px;
             margin-bottom: 15px;
         }
@@ -180,12 +181,191 @@
             display: block;
         }
 
-        iframe {
-            width: 100%;
-            height: 520px;
-            border: none;
+        .labs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 15px;
+        }
+
+        .lab-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 18px;
             border-radius: 8px;
-            background: #0b0f19;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .lab-info-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .lab-name {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .status-badge {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .status-online {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+        }
+
+        .status-pending {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        .lab-meta {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 15px;
+        }
+
+        .lab-meta div {
+            margin-bottom: 4px;
+        }
+
+        .launch-btn {
+            background-color: #10b981;
+            color: #0b0f19;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+        }
+
+        .launch-btn:hover {
+            background-color: #059669;
+        }
+
+        .active-lab-container {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .lab-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .back-btn {
+            background-color: #374151;
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background-color: #4b5563;
+        }
+
+        .mock-terminal {
+            background-color: #05070c;
+            border: 1px solid #1f2937;
+            padding: 15px;
+            border-radius: 6px;
+            min-height: 180px;
+            color: #10b981;
+            margin-top: 10px;
+        }
+
+        .mock-terminal input {
+            background: transparent;
+            border: none;
+            color: #38bdf8;
+            outline: none;
+            font-family: monospace;
+            font-size: 14px;
+            width: 70%;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 65px;
+                padding: 0;
+                border-right: none;
+                border-top: 1px solid #1f2937;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar .logo {
+                display: none;
+            }
+
+            .sidebar ul {
+                display: flex;
+                width: 100%;
+                height: 100%;
+                justify-content: space-around;
+                align-items: center;
+            }
+
+            .sidebar li {
+                flex: 1;
+            }
+
+            .sidebar a {
+                margin-bottom: 0;
+                padding: 10px 5px;
+                font-size: 11px;
+                border-radius: 0;
+                text-align: center;
+            }
+
+            .sidebar a:hover,
+            .sidebar a.active {
+                background-color: transparent;
+                color: #10b981;
+            }
+
+            .main-content {
+                padding: 15px;
+                padding-bottom: 85px;
+            }
+
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .labs-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -194,11 +374,11 @@
     <div class="sidebar">
         <div class="logo">_> CyberGuard</div>
         <ul>
-            <li><a onclick="switchTab('home', this)" class="active">Home</a></li>
-            <li><a onclick="switchTab('labs', this)">Labs</a></li>
-            <li><a onclick="switchTab('community', this)">Community</a></li>
-            <li><a onclick="switchTab('courses', this)">Courses</a></li>
-            <li><a onclick="switchTab('leaderboard', this)">Leaderboard</a></li>
+            <li><a onclick="switchTab('home')" id="nav-home" class="active">Home</a></li>
+            <li><a onclick="switchTab('labs')" id="nav-labs">Labs</a></li>
+            <li><a onclick="switchTab('community')" id="nav-community">Community</a></li>
+            <li><a onclick="switchTab('courses')" id="nav-courses">Courses</a></li>
+            <li><a onclick="switchTab('leaderboard')" id="nav-leaderboard">Rank</a></li>
         </ul>
     </div>
 
@@ -244,7 +424,46 @@
                 </div>
 
                 <div id="view-labs" class="tab-view">
-                    <iframe src="labs_panel.html"></iframe>
+                    <div class="labs-section" id="list-view">
+                        <h2>Aktiv Laboratoriyalar</h2>
+                        <div class="labs-grid">
+                            <div class="lab-card">
+                                <div class="lab-info-header">
+                                    <span class="lab-name">SQL Injection Advanced</span>
+                                    <span class="status-badge status-online">Online</span>
+                                </div>
+                                <div class="lab-meta">
+                                    <div><strong>Çətinlik:</strong> Orta</div>
+                                    <div><strong>Target IP:</strong> 10.10.12.45</div>
+                                </div>
+                                <button class="launch-btn" onclick="startLab('SQL Injection Advanced', '10.10.12.45')">Launch</button>
+                            </div>
+                            <div class="lab-card">
+                                <div class="lab-info-header">
+                                    <span class="lab-name">Buffer Overflow Part 1</span>
+                                    <span class="status-badge status-pending">Pending</span>
+                                </div>
+                                <div class="lab-meta">
+                                    <div><strong>Çətinlik:</strong> Çətin</div>
+                                    <div><strong>Target IP:</strong> 10.10.12.89</div>
+                                </div>
+                                <button class="launch-btn" onclick="startLab('Buffer Overflow Part 1', '10.10.12.89')">Launch</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="active-lab-container" id="lab-view" style="display: none;">
+                        <div class="lab-header">
+                            <h2 id="active-lab-title">Lab Sessiynası</h2>
+                            <button class="back-btn" onclick="closeLab()">Geri</button>
+                        </div>
+                        <p style="font-size: 14px; color: #9ca3af; margin-bottom: 10px;">Hədəf IP: <span id="active-lab-ip" style="color: #38bdf8;"></span></p>
+                        <div class="mock-terminal">
+                            <p style="color: #6b7280; margin-bottom: 10px;">[Sistem başladıldı. Komandaları daxil edin...]</p>
+                            <p>root@cyberguard-sandbox:~# <input type="text" placeholder="Komanda yazın..." id="term-input" onkeydown="handleCommand(event)"></p>
+                            <p id="term-output" style="margin-top: 10px; color: #38bdf8;"></p>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="view-community" class="tab-view">
@@ -302,7 +521,7 @@
     </div>
 
     <script>
-        function switchTab(tabId, element) {
+        function switchTab(tabId) {
             let views = document.querySelectorAll('.tab-view');
             views.forEach(view => view.classList.remove('active-view'));
 
@@ -310,7 +529,40 @@
             links.forEach(link => link.classList.remove('active'));
 
             document.getElementById('view-' + tabId).classList.add('active-view');
-            element.classList.add('active');
+            document.getElementById('nav-' + tabId).classList.add('active');
+        }
+
+        function startLab(name, ip) {
+            document.getElementById('list-view').style.display = 'none';
+            document.getElementById('lab-view').style.display = 'block';
+            document.getElementById('active-lab-title').innerText = name;
+            document.getElementById('active-lab-ip').innerText = ip;
+            document.getElementById('term-output').innerText = '';
+            document.getElementById('term-input').value = '';
+        }
+
+        function closeLab() {
+            document.getElementById('lab-view').style.display = 'none';
+            document.getElementById('list-view').style.display = 'block';
+        }
+
+        function handleCommand(e) {
+            if (e.key === 'Enter') {
+                let val = document.getElementById('term-input').value;
+                let output = document.getElementById('term-output');
+                if(val.toLowerCase() === 'help') {
+                    output.innerText = "Mövcud komandalar: nmap, cat flag.txt, clear";
+                } else if(val.toLowerCase() === 'cat flag.txt') {
+                    output.innerText = "FLAG{cYbEr_GuArD_lAb_SuCcEsS}";
+                } else if(val.toLowerCase() === 'nmap') {
+                    output.innerText = "Scanning ports... Port 80 (HTTP) - OPEN";
+                } else if(val.toLowerCase() === 'clear') {
+                    output.innerText = "";
+                } else {
+                    output.innerText = "Komanda tapılmadı. Kömək üçün 'help' yazın.";
+                }
+                document.getElementById('term-input').value = '';
+            }
         }
 
         document.addEventListener("DOMContentLoaded", () => {

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blink Efekti Örneği</title>
+    <style>
+        .yanip-sonen-metin {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            0% {
+                opacity: 1; 
+            }
+            50% {
+                opacity: 0; 
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <p class="yanip-sonen-metin">Dikkat! Bu yazı yanıp sönüyor.</p>
+
+</body>
+</html>
