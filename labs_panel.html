@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Labs Panel</title>
+    <title>CyberGuard Dashboard</title>
     
     <style>
         * {
@@ -14,30 +14,187 @@
         }
 
         body {
-            background-color: #0b0f19;     
-            color: #e2e8f0;              
+            display: flex;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
 
+        .sidebar {
+            width: 240px;
+            background-color: #111827;
+            padding: 25px 20px;
+            border-right: 1px solid #1f2937;
+        }
+
+        .sidebar .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #10b981;
+            margin-bottom: 30px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar a {
+            color: #9ca3af;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .sidebar a:hover, 
+        .sidebar a.active {
+            background-color: #1f2937;
+            color: #10b981;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .main-header {
+            margin-bottom: 25px;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .workspace {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .stat-card p {
+            font-size: 12px;
+            color: #9ca3af;
+            margin-bottom: 5px;
+        }
+
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .skills-section {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .skills-section h2, 
+        .console-section h2,
         .labs-section h2 {
             font-size: 18px;
             margin-bottom: 15px;
-            color: #ffffff;
+        }
+
+        .skill-item {
+            margin-bottom: 15px;
+        }
+
+        .skill-title {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #9ca3af;
+        }
+
+        .progress-bar-bg {
+            background-color: #1f2937;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background-color: #10b981;
+            height: 100%;
+            width: 0%;
+            transition: width 1s;
+        }
+
+        .console-box {
+            background-color: #05070c;
+            border: 1px solid #1f2937;
+            border-radius: 6px;
+            padding: 15px;
+            color: #38bdf8;
+            min-height: 110px;
+        }
+
+        .console-line {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .console-prompt {
+            color: #10b981;
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: #38bdf8;
+            width: 8px;
+            height: 15px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .tab-view {
+            display: none;
+        }
+        
+        .tab-view.active-view {
+            display: block;
         }
 
         .labs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); 
-            gap: 15px;                    
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 15px;
         }
+
         .lab-card {
             background-color: #111827;
             border: 1px solid #1f2937;
             padding: 18px;
             border-radius: 8px;
-            
             display: flex;
             flex-direction: column;
-            justify-content: space-between; 
+            justify-content: space-between;
         }
 
         .lab-info-header {
@@ -64,7 +221,7 @@
         }
 
         .status-pending {
-            background-color: rgba(245, 158, 11, 0.15); 
+            background-color: rgba(245, 158, 11, 0.15);
             color: #f59e0b;
         }
 
@@ -91,7 +248,21 @@
         }
 
         .launch-btn:hover {
-            background-color: #059669; 
+            background-color: #059669;
+        }
+
+        .active-lab-container {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .lab-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            align-items: center;
         }
 
         .back-btn {
@@ -106,20 +277,6 @@
         .back-btn:hover {
             background-color: #4b5563;
         }
-        .active-lab-container {
-            display: none;                 
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .lab-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            align-items: center;
-        }
 
         .mock-terminal {
             background-color: #05070c;
@@ -127,15 +284,15 @@
             padding: 15px;
             border-radius: 6px;
             min-height: 180px;
-            color: #10b981;             
+            color: #10b981;
             margin-top: 10px;
         }
 
         .mock-terminal input {
-            background: transparent;       
-            border: none;                  
-            color: #38bdf8;                
-            outline: none;                  
+            background: transparent;
+            border: none;
+            color: #38bdf8;
+            outline: none;
             font-family: monospace;
             font-size: 14px;
             width: 70%;
@@ -144,85 +301,185 @@
 </head>
 <body>
 
-    <div class="labs-section" id="list-view">
-        <h2>Aktiv Laboratoriyalar</h2>
-        
-        <div class="labs-grid">
-            
-            <div class="lab-card">
-                <div class="lab-info-header">
-                    <span class="lab-name">SQL Injection Advanced</span>
-                    <span class="status-badge status-online">Online</span>
-                </div>
-                <div class="lab-meta">
-                    <div><strong>Çətinlik:</strong> Orta</div>
-                    <div><strong>Target IP:</strong> 10.10.12.45</div>
-                </div>
-                <button class="launch-btn" onclick="startLab('SQL Injection Advanced', '10.10.12.45')">Launch</button>
-            </div>
-
-            <div class="lab-card">
-                <div class="lab-info-header">
-                    <span class="lab-name">Buffer Overflow Part 1</span>
-                    <span class="status-badge status-pending">Pending</span>
-                </div>
-                <div class="lab-meta">
-                    <div><strong>Çətinlik:</strong> Çətin</div>
-                    <div><strong>Target IP:</strong> 10.10.12.89</div>
-                </div>
-                <button class="launch-btn" onclick="startLab('Buffer Overflow Part 1', '10.10.12.89')">Launch</button>
-            </div>
-
-        </div>
+    <div class="sidebar">
+        <div class="logo">_> CyberGuard</div>
+        <ul>
+            <li><a onclick="switchTab('home', this)" class="active">Home</a></li>
+            <li><a onclick="switchTab('labs', this)">Labs</a></li>
+            <li><a onclick="switchTab('community', this)">Community</a></li>
+            <li><a onclick="switchTab('courses', this)">Courses</a></li>
+            <li><a onclick="switchTab('leaderboard', this)">Leaderboard</a></li>
+        </ul>
     </div>
 
-    <div class="active-lab-container" id="lab-view">
+    <div class="main-content">
         
-        <div class="lab-header">
-            <h2 id="active-lab-title">Lab Sessiynası</h2>
-            <button class="back-btn" onclick="closeLab()">Geri</button>
+        <div class="main-header">
+            <h1>Xoş gəldiniz, Fuad</h1>
         </div>
-        
-        <p style="font-size: 14px; color: #9ca3af; margin-bottom: 10px;">
-            Hədəf IP: <span id="active-lab-ip" style="color: #38bdf8;"></span>
-        </p>
-        
-        <div class="mock-terminal">
-            <p style="color: #6b7280; margin-bottom: 10px;">[Sistem başladıldı. Komandaları daxil edin...]</p>
+
+        <div class="main-layout">
             
-            <p>
-                root@cyberguard-sandbox:~# 
-                <input type="text" placeholder="Komanda yazın..." id="term-input" onkeydown="handleCommand(event)">
-            </p>
-            
-            <p id="term-output" style="margin-top: 10px; color: #38bdf8;"></p>
+            <div class="workspace">
+                
+                <div id="view-home" class="tab-view active-view">
+                    <div class="stats-grid" style="margin-bottom: 25px;">
+                        <div class="stat-card">
+                            <p>Ümumi Laboratoriyalar</p>
+                            <div class="value">42</div>
+                        </div>
+                        <div class="stat-card">
+                            <p>Tamamlanan Tasklar</p>
+                            <div class="value">18</div>
+                        </div>
+                        <div class="stat-card">
+                            <p>Sistem Statusu</p>
+                            <div class="value">ONLINE</div>
+                        </div>
+                    </div>
+                    
+                    <div class="console-section">
+                        <h2>Terminal Konsolu</h2>
+                        <div class="console-box">
+                            <div class="console-line">[INFO] Sistem uğurla başladıldı.</div>
+                            <div class="console-line">
+                                <span class="console-prompt">fuad@cyberguard:~$</span> nmap -sV 192.168.1.1
+                            </div>
+                            <div class="console-line">
+                                <span class="console-prompt">fuad@cyberguard:~$</span> 
+                                <span class="cursor"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-labs" class="tab-view">
+                    <div class="labs-section" id="list-view">
+                        <h2>Aktiv Laboratoriyalar</h2>
+                        <div class="labs-grid">
+                            <div class="lab-card">
+                                <div class="lab-info-header">
+                                    <span class="lab-name">SQL Injection Advanced</span>
+                                    <span class="status-badge status-online">Online</span>
+                                </div>
+                                <div class="lab-meta">
+                                    <div><strong>Çətinlik:</strong> Orta</div>
+                                    <div><strong>Target IP:</strong> 10.10.12.45</div>
+                                </div>
+                                <button class="launch-btn" onclick="startLab('SQL Injection Advanced', '10.10.12.45')">Launch</button>
+                            </div>
+                            <div class="lab-card">
+                                <div class="lab-info-header">
+                                    <span class="lab-name">Buffer Overflow Part 1</span>
+                                    <span class="status-badge status-pending">Pending</span>
+                                </div>
+                                <div class="lab-meta">
+                                    <div><strong>Çətinlik:</strong> Çətin</div>
+                                    <div><strong>Target IP:</strong> 10.10.12.89</div>
+                                </div>
+                                <button class="launch-btn" onclick="startLab('Buffer Overflow Part 1', '10.10.12.89')">Launch</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="active-lab-container" id="lab-view" style="display: none;">
+                        <div class="lab-header">
+                            <h2 id="active-lab-title">Lab Sessiynası</h2>
+                            <button class="back-btn" onclick="closeLab()">Geri</button>
+                        </div>
+                        <p style="font-size: 14px; color: #9ca3af; margin-bottom: 10px;">Hədəf IP: <span id="active-lab-ip" style="color: #38bdf8;"></span></p>
+                        <div class="mock-terminal">
+                            <p style="color: #6b7280; margin-bottom: 10px;">[Sistem başladıldı. Komandaları daxil edin...]</p>
+                            <p>root@cyberguard-sandbox:~# <input type="text" placeholder="Komanda yazın..." id="term-input" onkeydown="handleCommand(event)"></p>
+                            <p id="term-output" style="margin-top: 10px; color: #38bdf8;"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-community" class="tab-view">
+                    <div class="console-section">
+                        <h2>Community Hub</h2>
+                        <div class="console-box" style="min-height: 200px;">
+                            <div class="console-line" style="color: #10b981;">[COMMUNITY] Forum və Sosial Şəbəkə daxil edildi.</div>
+                            <div class="console-line" style="color: #9ca3af; margin-top: 15px;">Tezliklə aktiv olacak. Digər tələbələr və komandanızla bura qoşulun!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-courses" class="tab-view">
+                    <div class="console-section">
+                        <h2>Kurslar</h2>
+                        <div class="console-box"><div class="console-line">Yüklənir...</div></div>
+                    </div>
+                </div>
+
+                <div id="view-leaderboard" class="tab-view">
+                    <div class="console-section">
+                        <h2>Leaderboard</h2>
+                        <div class="console-box"><div class="console-line">Yüklənir...</div></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="skills-section">
+                <h2>Bacarıq İzləmə</h2>
+                
+                <div class="skill-item">
+                    <div class="skill-title">
+                        <span>Web Pentesting</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="pb-web"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-title">
+                        <span>Network Security</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="pb-network"></div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
 
     <script>
-        function startLab(name, ip) {
-            document.getElementById('list-view').style.display = 'none'; 
-            document.getElementById('lab-view').style.display = 'block';       
+        function switchTab(tabId, element) {
+            let views = document.querySelectorAll('.tab-view');
+            views.forEach(view => view.classList.remove('active-view'));
 
+            let links = document.querySelectorAll('.sidebar a');
+            links.forEach(link => link.classList.remove('active'));
+
+            document.getElementById('view-' + tabId).classList.add('active-view');
+            element.classList.add('active');
+        }
+
+        function startLab(name, ip) {
+            document.getElementById('list-view').style.display = 'none';
+            document.getElementById('lab-view').style.display = 'block';
             document.getElementById('active-lab-title').innerText = name;
             document.getElementById('active-lab-ip').innerText = ip;
-            
             document.getElementById('term-output').innerText = '';
             document.getElementById('term-input').value = '';
         }
 
         function closeLab() {
-            document.getElementById('lab-view').style.display = 'none';  
-            document.getElementById('list-view').style.display = 'block'; 
+            document.getElementById('lab-view').style.display = 'none';
+            document.getElementById('list-view').style.display = 'block';
         }
-
 
         function handleCommand(e) {
             if (e.key === 'Enter') {
                 let val = document.getElementById('term-input').value;
                 let output = document.getElementById('term-output');
-
                 if(val.toLowerCase() === 'help') {
                     output.innerText = "Mövcud komandalar: nmap, cat flag.txt, clear";
                 } else if(val.toLowerCase() === 'cat flag.txt') {
@@ -234,10 +491,17 @@
                 } else {
                     output.innerText = "Komanda tapılmadı. Kömək üçün 'help' yazın.";
                 }
-                
                 document.getElementById('term-input').value = '';
             }
         }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(() => {
+                document.getElementById("pb-web").style.width = "75%";
+                document.getElementById("pb-network").style.width = "60%";
+            }, 300);
+        });
     </script>
+
 </body>
 </html>
