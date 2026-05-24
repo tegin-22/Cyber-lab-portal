@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CyberGuard – Leaderboard</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="leaderboard.css">
+    <meta charset="UTF-8">
+    <title>CyberGuard - Leaderboard</title>
+    <link rel="stylesheet" href="leaderboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-   <div class="sidebar">
+
+<div class="page">
+
+    <div class="sidebar">
         <div class="logo">_> CyberGuard</div>
         <ul>
             <li><a href="main.html">Home</a></li>          
@@ -16,201 +18,89 @@
             <li><a href="labs_panel.html">Labs</a></li>
             <li><a href="courses.html">Courses</a></li>
             <li><a href="community.html">Community</a></li>
-            <li><a href="leaderboard.html" class="active" >Leaderboard</a></li>
+            <li><a href="leaderboard.html" class="active">Leaderboard</a></li>
         </ul>
     </div>
+    <div class="main">
 
+        <h1>Leaderboard</h1>
+        <p class="sub">Global siralama</p>
 
-<main class="main">
-  <div class="page-top">
-    <h1>Leaderboard</h1>
-    <p>Global sıralama · Real-time yenilənir</p>
-  </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>İstifadəçi</th>
+                    <th>Score</th>
+                    <th>Labs</th>
+                    <th>Səviyyə</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>👑 1</td>
+                    <td>axr0ot <small>🇺🇸</small></td>
+                    <td>48,250</td>
+                    <td>312</td>
+                    <td><span class="tag elite">ELITE</span></td>
+                </tr>
+                <tr>
+                    <td>🥈 2</td>
+                    <td>n3txpl0it <small>🇩🇪</small></td>
+                    <td>41,800</td>
+                    <td>278</td>
+                    <td><span class="tag elite">ELITE</span></td>
+                </tr>
+                <tr>
+                    <td>🥉 3</td>
+                    <td>sh4d0wh4x <small>🇬🇧</small></td>
+                    <td>38,500</td>
+                    <td>245</td>
+                    <td><span class="tag pro">PRO</span></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>cyber_wolf99 <small>🇫🇷</small></td>
+                    <td>31,200</td>
+                    <td>198</td>
+                    <td><span class="tag pro">PRO</span></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>z3r0_shot <small>🇯🇵</small></td>
+                    <td>27,940</td>
+                    <td>175</td>
+                    <td><span class="tag adv">ADV</span></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>ph4ntom_hx <small>🇧🇷</small></td>
+                    <td>24,100</td>
+                    <td>159</td>
+                    <td><span class="tag adv">ADV</span></td>
+                </tr>
+                <tr class="gap">
+                    <td colspan="5">· · ·</td>
+                </tr>
+                <tr class="me">
+                    <td>#124</td>
+                    <td>Fuad <small>🇦🇿</small></td>
+                    <td>8,740</td>
+                    <td>42</td>
+                    <td><span class="tag adv">ADV</span></td>
+                </tr>
+                <tr>
+                    <td>125</td>
+                    <td>m4lw4re_k1d <small>🇹🇷</small></td>
+                    <td>8,620</td>
+                    <td>40</td>
+                    <td><span class="tag beg">BEGINNER</span></td>
+                </tr>
+            </tbody>
+        </table>
 
-  <!-- STAT CARDS -->
-  <div class="stat-grid">
-    <div class="stat-card">
-      <div class="stat-label">Ümumi Labs</div>
-      <div class="stat-value" id="c1">0</div>
-      <div class="stat-sub">aktiv laboratoriya</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-label">Hackerlər</div>
-      <div class="stat-value" id="c2">0</div>
-      <div class="stat-sub">qeydiyyatlı istifadəçi</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Uğur Faizi</div>
-      <div class="stat-value" id="c3">0%</div>
-      <div class="stat-sub">animasiyalı sayğac</div>
-    </div>
-  </div>
+</div>
 
-  <!-- LEADERBOARD -->
-  <div class="lb-panel">
-    <div class="lb-header">
-      <div class="lb-title">Global Sıralama</div>
-      <div class="live"><div class="live-dot"></div>LIVE</div>
-    </div>
-
-    <!-- Filter tabs -->
-    <div class="filter-tabs">
-      <button class="tab active">Hamısı</button>
-      <button class="tab">Web Hacking</button>
-      <button class="tab">Crypto</button>
-      <button class="tab">Forensics</button>
-      <button class="tab">Bu Ay</button>
-    </div>
-    <div class="t-head">
-      <span>RANK</span>
-      <span>İSTİFADƏÇİ</span>
-      <span>SCORE</span>
-      <span>LABS</span>
-      <span>SEVİYYƏ</span>
-    </div>
-    <div class="t-row">
-      <div class="rank"><span class="rank-icon">👑</span><span class="rank-n">1</span></div>
-      <div class="user">
-        <div class="avatar">AX</div>
-        <div><div class="uname">axr0ot</div><div class="country">🇺🇸 United States</div></div>
-      </div>
-      <div class="score">48,250</div>
-      <div class="labs">312 labs</div>
-      <div class="badge-col"><span class="badge b-elite">ELITE</span></div>
-    </div>
-    <div class="t-row">
-      <div class="rank"><span class="rank-icon">🥈</span><span class="rank-n">2</span></div>
-      <div class="user">
-        <div class="avatar">NX</div>
-        <div><div class="uname">n3txpl0it</div><div class="country">🇩🇪 Germany</div></div>
-      </div>
-      <div class="score">41,800</div>
-      <div class="labs">278 labs</div>
-      <div class="badge-col"><span class="badge b-elite">ELITE</span></div>
-    </div>
-    <div class="t-row">
-      <div class="rank"><span class="rank-icon">🥉</span><span class="rank-n">3</span></div>
-      <div class="user">
-        <div class="avatar">SH</div>
-        <div><div class="uname">sh4d0wh4x</div><div class="country">🇬🇧 United Kingdom</div></div>
-      </div>
-      <div class="score">38,500</div>
-      <div class="labs">245 labs</div>
-      <div class="badge-col"><span class="badge b-pro">PRO</span></div>
-    </div>
-    <div class="t-row">
-      <div class="rank rank-indent"><span class="rank-n">4</span></div>
-      <div class="user">
-        <div class="avatar">CW</div>
-        <div><div class="uname">cyber_wolf99</div><div class="country">🇫🇷 France</div></div>
-      </div>
-      <div class="score">31,200</div>
-      <div class="labs">198 labs</div>
-      <div class="badge-col"><span class="badge b-pro">PRO</span></div>
-    </div>
-    <div class="t-row">
-      <div class="rank rank-indent"><span class="rank-n">5</span></div>
-      <div class="user">
-        <div class="avatar">ZS</div>
-        <div><div class="uname">z3r0_shot</div><div class="country">🇯🇵 Japan</div></div>
-      </div>
-      <div class="score">27,940</div>
-      <div class="labs">175 labs</div>
-      <div class="badge-col"><span class="badge b-advanced">ADV</span></div>
-    </div>
-    <div class="t-row">
-      <div class="rank rank-indent"><span class="rank-n">6</span></div>
-      <div class="user">
-        <div class="avatar">PH</div>
-        <div><div class="uname">ph4ntom_hx</div><div class="country">🇧🇷 Brazil</div></div>
-      </div>
-      <div class="score">24,100</div>
-      <div class="labs">159 labs</div>
-      <div class="badge-col"><span class="badge b-advanced">ADV</span></div>
-    </div>
-    <div class="separator">· · · 117 sıra gizlənib · · ·</div>
-    <div class="t-row you">
-      <div class="rank rank-you"><span class="rank-n rank-n-you">#124</span></div>
-      <div class="user">
-        <div class="avatar">FU</div>
-        <div><div class="uname">Fuad</div><div class="country">🇦🇿 Azerbaijan</div></div>
-      </div>
-      <div class="score">8,740</div>
-      <div class="labs">42 labs</div>
-      <div class="badge-col"><span class="badge b-advanced">ADV</span></div>
-    </div>
-    <div class="t-row">
-      <div class="rank rank-indent"><span class="rank-n">125</span></div>
-      <div class="user">
-        <div class="avatar">MK</div>
-        <div><div class="uname">m4lw4re_k1d</div><div class="country">🇹🇷 Turkey</div></div>
-      </div>
-      <div class="score">8,620</div>
-      <div class="labs">40 labs</div>
-      <div class="badge-col"><span class="badge b-beginner">BEGİNNER</span></div>
-    </div>
-
-  </div><!-- /lb-panel -->
-  <div class="counters">
-    <div class="cnt-card">
-      <span class="cnt-n" id="cc1">500+</span>
-      <span class="cnt-l">Labs Mövcuddur</span>
-    </div>
-    <div class="cnt-card">
-      <span class="cnt-n" id="cc2">12K+</span>
-      <span class="cnt-l">Aktiv Hacker</span>
-    </div>
-    <div class="cnt-card">
-      <span class="cnt-n" id="cc3">98%</span>
-      <span class="cnt-l">Uğur Nisbəti</span>
-    </div>
-  </div>
-
-  <div class="scroll-hint">
-    <div class="arr-btn">↓</div>
-    <span>Scroll ilə daha çox nəticə gör</span>
-  </div>
-
-</main>
-
-<script>
-function countUp(el, target, suffix, duration) {
-  const steps = 60;
-  let i = 0;
-  const inc = target / steps;
-  const delay = duration / steps;
-  const t = setInterval(() => {
-    i++;
-    const v = Math.min(Math.round(inc * i), target);
-    el.textContent = v.toLocaleString() + suffix;
-    if (i >= steps) clearInterval(t);
-  }, delay);
-}
-
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    countUp(document.getElementById('c1'), 500, '+', 1600);
-    countUp(document.getElementById('c2'), 12000, '', 1800);
-    let p = 0;
-    const pEl = document.getElementById('c3');
-    const pt = setInterval(() => {
-      p++;
-      pEl.textContent = p + '%';
-      if (p >= 98) clearInterval(pt);
-    }, 18);
-    io.disconnect();
-  });
-}, { threshold: 0.2 });
-
-io.observe(document.querySelector('.stat-grid'));
-
-document.querySelectorAll('.tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
-</script>
 </body>
 </html>
