@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberGuard Mobile & Web Dashboard</title>
+    <title>CyberGuard Full Application</title>
     
     <style>
         * {
@@ -14,10 +14,96 @@
         }
 
         body {
-            display: flex;
             background-color: #0b0f19;
             color: #e2e8f0;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .site-navbar {
+            background-color: #111827;
+            border-bottom: 1px solid #1f2937;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .site-navbar .brand {
+            font-size: 20px;
+            font-weight: bold;
+            color: #10b981;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active-nav {
+            color: #10b981;
+        }
+
+        .page-view {
+            display: none;
+            flex: 1;
+        }
+
+        .page-view.active-page {
+            display: block;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 100px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-section h1 {
+            font-size: 36px;
+            color: #10b981;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            color: #9ca3af;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .cta-btn {
+            background-color: #10b981;
+            color: #0b0f19;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            background-color: #059669;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 52px);
         }
 
         .sidebar {
@@ -25,13 +111,6 @@
             background-color: #111827;
             padding: 25px 20px;
             border-right: 1px solid #1f2937;
-        }
-
-        .sidebar .logo {
-            font-size: 20px;
-            font-weight: bold;
-            color: #10b981;
-            margin-bottom: 30px;
         }
 
         .sidebar ul {
@@ -49,7 +128,7 @@
         }
 
         .sidebar a:hover, 
-        .sidebar a.active {
+        .sidebar a.active-tab {
             background-color: #1f2937;
             color: #10b981;
         }
@@ -299,8 +378,17 @@
         }
 
         @media (max-width: 768px) {
-            body {
+            .site-navbar {
+                padding: 15px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+
+            .dashboard-container {
                 flex-direction: column;
+                min-height: auto;
             }
 
             .sidebar {
@@ -308,7 +396,7 @@
                 bottom: 0;
                 left: 0;
                 width: 100%;
-                height: 65px;
+                height: 60px;
                 padding: 0;
                 border-right: none;
                 border-top: 1px solid #1f2937;
@@ -316,10 +404,6 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-            }
-
-            .sidebar .logo {
-                display: none;
             }
 
             .sidebar ul {
@@ -343,7 +427,7 @@
             }
 
             .sidebar a:hover,
-            .sidebar a.active {
+            .sidebar a.active-tab {
                 background-color: transparent;
                 color: #10b981;
             }
@@ -371,165 +455,189 @@
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="logo">_> CyberGuard</div>
-        <ul>
-            <li><a onclick="switchTab('home')" id="nav-home" class="active">Home</a></li>
-            <li><a onclick="switchTab('labs')" id="nav-labs">Labs</a></li>
-            <li><a onclick="switchTab('community')" id="nav-community">Community</a></li>
-            <li><a onclick="switchTab('courses')" id="nav-courses">Courses</a></li>
-            <li><a onclick="switchTab('leaderboard')" id="nav-leaderboard">Rank</a></li>
+    <nav class="site-navbar">
+        <div class="brand">_> CyberGuard</div>
+        <ul class="nav-links">
+            <li><a onclick="navigateTo('landing')" id="nav-landing" class="active-nav">Home Page</a></li>
+            <li><a onclick="navigateTo('dashboard')" id="nav-dashboard">Dashboard</a></li>
         </ul>
+    </nav>
+
+    <div id="page-landing" class="page-view active-page">
+        <section class="hero-section">
+            <h1>Kiber təhlükəsizlik dünyasına addım atın</h1>
+            <p>Praktiki laboratoriyalar, SQL injection tapşırıqları və real mühit sandbox simulyasiyaları ilə bacarıqlarınızı inkişaf etdirin.</p>
+            <button class="cta-btn" onclick="navigateTo('dashboard')">Dashboarda Keç</button>
+        </section>
     </div>
 
-    <div class="main-content">
-        
-        <div class="main-header">
-            <h1>Xoş gəldiniz, Fuad</h1>
-        </div>
-
-        <div class="main-layout">
-            
-            <div class="workspace">
-                
-                <div id="view-home" class="tab-view active-view">
-                    <div class="stats-grid" style="margin-bottom: 25px;">
-                        <div class="stat-card">
-                            <p>Ümumi Laboratoriyalar</p>
-                            <div class="value">42</div>
-                        </div>
-                        <div class="stat-card">
-                            <p>Tamamlanan Tasklar</p>
-                            <div class="value">18</div>
-                        </div>
-                        <div class="stat-card">
-                            <p>Sistem Statusu</p>
-                            <div class="value">ONLINE</div>
-                        </div>
-                    </div>
-                    
-                    <div class="console-section">
-                        <h2>Terminal Konsolu</h2>
-                        <div class="console-box">
-                            <div class="console-line">[INFO] Sistem uğurla başladıldı.</div>
-                            <div class="console-line">
-                                <span class="console-prompt">fuad@cyberguard:~$</span> nmap -sV 192.168.1.1
-                            </div>
-                            <div class="console-line">
-                                <span class="console-prompt">fuad@cyberguard:~$</span> 
-                                <span class="cursor"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="view-labs" class="tab-view">
-                    <div class="labs-section" id="list-view">
-                        <h2>Aktiv Laboratoriyalar</h2>
-                        <div class="labs-grid">
-                            <div class="lab-card">
-                                <div class="lab-info-header">
-                                    <span class="lab-name">SQL Injection Advanced</span>
-                                    <span class="status-badge status-online">Online</span>
-                                </div>
-                                <div class="lab-meta">
-                                    <div><strong>Çətinlik:</strong> Orta</div>
-                                    <div><strong>Target IP:</strong> 10.10.12.45</div>
-                                </div>
-                                <button class="launch-btn" onclick="startLab('SQL Injection Advanced', '10.10.12.45')">Launch</button>
-                            </div>
-                            <div class="lab-card">
-                                <div class="lab-info-header">
-                                    <span class="lab-name">Buffer Overflow Part 1</span>
-                                    <span class="status-badge status-pending">Pending</span>
-                                </div>
-                                <div class="lab-meta">
-                                    <div><strong>Çətinlik:</strong> Çətin</div>
-                                    <div><strong>Target IP:</strong> 10.10.12.89</div>
-                                </div>
-                                <button class="launch-btn" onclick="startLab('Buffer Overflow Part 1', '10.10.12.89')">Launch</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="active-lab-container" id="lab-view" style="display: none;">
-                        <div class="lab-header">
-                            <h2 id="active-lab-title">Lab Sessiynası</h2>
-                            <button class="back-btn" onclick="closeLab()">Geri</button>
-                        </div>
-                        <p style="font-size: 14px; color: #9ca3af; margin-bottom: 10px;">Hədəf IP: <span id="active-lab-ip" style="color: #38bdf8;"></span></p>
-                        <div class="mock-terminal">
-                            <p style="color: #6b7280; margin-bottom: 10px;">[Sistem başladıldı. Komandaları daxil edin...]</p>
-                            <p>root@cyberguard-sandbox:~# <input type="text" placeholder="Komanda yazın..." id="term-input" onkeydown="handleCommand(event)"></p>
-                            <p id="term-output" style="margin-top: 10px; color: #38bdf8;"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="view-community" class="tab-view">
-                    <div class="console-section">
-                        <h2>Community Hub</h2>
-                        <div class="console-box" style="min-height: 200px;">
-                            <div class="console-line" style="color: #10b981;">[COMMUNITY] Forum və Sosial Şəbəkə daxil edildi.</div>
-                            <div class="console-line" style="color: #9ca3af; margin-top: 15px;">Tezliklə aktiv olacak. Digər tələbələr və komandanızla bura qoşulun!</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="view-courses" class="tab-view">
-                    <div class="console-section">
-                        <h2>Kurslar</h2>
-                        <div class="console-box"><div class="console-line">Yüklənir...</div></div>
-                    </div>
-                </div>
-
-                <div id="view-leaderboard" class="tab-view">
-                    <div class="console-section">
-                        <h2>Leaderboard</h2>
-                        <div class="console-box"><div class="console-line">Yüklənir...</div></div>
-                    </div>
-                </div>
-
+    <div id="page-dashboard" class="page-view">
+        <div class="dashboard-container">
+            <div class="sidebar">
+                <ul>
+                    <li><a onclick="switchTab('home')" id="tab-home" class="active-tab">Home</a></li>
+                    <li><a onclick="switchTab('labs')" id="tab-labs">Labs</a></li>
+                    <li><a onclick="switchTab('community')" id="tab-community">Community</a></li>
+                    <li><a onclick="switchTab('courses')" id="tab-courses">Courses</a></li>
+                    <li><a onclick="switchTab('leaderboard')" id="tab-leaderboard">Rank</a></li>
+                </ul>
             </div>
 
-            <div class="skills-section">
-                <h2>Bacarıq İzləmə</h2>
-                
-                <div class="skill-item">
-                    <div class="skill-title">
-                        <span>Web Pentesting</span>
-                        <span>75%</span>
-                    </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="pb-web"></div>
-                    </div>
+            <div class="main-content">
+                <div class="main-header">
+                    <h1>Xoş gəldiniz, Fuad</h1>
                 </div>
 
-                <div class="skill-item">
-                    <div class="skill-title">
-                        <span>Network Security</span>
-                        <span>60%</span>
+                <div class="main-layout">
+                    <div class="workspace">
+                        
+                        <div id="view-home" class="tab-view active-view">
+                            <div class="stats-grid" style="margin-bottom: 25px;">
+                                <div class="stat-card">
+                                    <p>Ümumi Laboratoriyalar</p>
+                                    <div class="value">42</div>
+                                </div>
+                                <div class="stat-card">
+                                    <p>Tamamlanan Tasklar</p>
+                                    <div class="value">18</div>
+                                </div>
+                                <div class="stat-card">
+                                    <p>Sistem Statusu</p>
+                                    <div class="value">ONLINE</div>
+                                </div>
+                            </div>
+                            
+                            <div class="console-section">
+                                <h2>Terminal Konsolu</h2>
+                                <div class="console-box">
+                                    <div class="console-line">[INFO] Sistem uğurla başladıldı.</div>
+                                    <div class="console-line">
+                                        <span class="console-prompt">fuad@cyberguard:~$</span> nmap -sV 192.168.1.1
+                                    </div>
+                                    <div class="console-line">
+                                        <span class="console-prompt">fuad@cyberguard:~$</span> 
+                                        <span class="cursor"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-labs" class="tab-view">
+                            <div class="labs-section" id="list-view">
+                                <h2>Aktiv Laboratoriyalar</h2>
+                                <div class="labs-grid">
+                                    <div class="lab-card">
+                                        <div class="lab-info-header">
+                                            <span class="lab-name">SQL Injection Advanced</span>
+                                            <span class="status-badge status-online">Online</span>
+                                        </div>
+                                        <div class="lab-meta">
+                                            <div><strong>Çətinlik:</strong> Orta</div>
+                                            <div><strong>Target IP:</strong> 10.10.12.45</div>
+                                        </div>
+                                        <button class="launch-btn" onclick="startLab('SQL Injection Advanced', '10.10.12.45')">Launch</button>
+                                    </div>
+                                    <div class="lab-card">
+                                        <div class="lab-info-header">
+                                            <span class="lab-name">Buffer Overflow Part 1</span>
+                                            <span class="status-badge status-pending">Pending</span>
+                                        </div>
+                                        <div class="lab-meta">
+                                            <div><strong>Çətinlik:</strong> Çətin</div>
+                                            <div><strong>Target IP:</strong> 10.10.12.89</div>
+                                        </div>
+                                        <button class="launch-btn" onclick="startLab('Buffer Overflow Part 1', '10.10.12.89')">Launch</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="active-lab-container" id="lab-view" style="display: none;">
+                                <div class="lab-header">
+                                    <h2 id="active-lab-title">Lab Sessiynası</h2>
+                                    <button class="back-btn" onclick="closeLab()">Geri</button>
+                                </div>
+                                <p style="font-size: 14px; color: #9ca3af; margin-bottom: 10px;">Hədəf IP: <span id="active-lab-ip" style="color: #38bdf8;"></span></p>
+                                <div class="mock-terminal">
+                                    <p style="color: #6b7280; margin-bottom: 10px;">[Sistem başladıldı. Komandaları daxil edin...]</p>
+                                    <p>root@cyberguard-sandbox:~# <input type="text" placeholder="Komanda yazın..." id="term-input" onkeydown="handleCommand(event)"></p>
+                                    <p id="term-output" style="margin-top: 10px; color: #38bdf8;"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-community" class="tab-view">
+                            <div class="console-section">
+                                <h2>Community Hub</h2>
+                                <div class="console-box" style="min-height: 200px;">
+                                    <div class="console-line" style="color: #10b981;">[COMMUNITY] Forum və Sosial Şəbəkə daxil edildi.</div>
+                                    <div class="console-line" style="color: #9ca3af; margin-top: 15px;">Tezliklə aktiv olacak. Digər tələbələr və komandanızla bura qoşulun!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="view-courses" class="tab-view">
+                            <div class="console-section">
+                                <h2>Kurslar</h2>
+                                <div class="console-box"><div class="console-line">Yüklənir...</div></div>
+                            </div>
+                        </div>
+
+                        <div id="view-leaderboard" class="tab-view">
+                            <div class="console-section">
+                                <h2>Leaderboard</h2>
+                                <div class="console-box"><div class="console-line">Yüklənir...</div></div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="pb-network"></div>
+
+                    <div class="skills-section">
+                        <h2>Bacarıq İzləmə</h2>
+                        <div class="skill-item">
+                            <div class="skill-title">
+                                <span>Web Pentesting</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="pb-web"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-title">
+                                <span>Network Security</span>
+                                <span>60%</span>
+                            </div>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="pb-network"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <script>
+        function navigateTo(pageId) {
+            let pages = document.querySelectorAll('.page-view');
+            pages.forEach(page => page.classList.remove('active-page'));
+
+            let navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => link.classList.remove('active-nav'));
+
+            document.getElementById('page-' + pageId).classList.add('active-page');
+            document.getElementById('nav-' + pageId).classList.add('active-nav');
+        }
+
         function switchTab(tabId) {
             let views = document.querySelectorAll('.tab-view');
             views.forEach(view => view.classList.remove('active-view'));
 
             let links = document.querySelectorAll('.sidebar a');
-            links.forEach(link => link.classList.remove('active'));
+            links.forEach(link => link.classList.remove('active-tab'));
 
             document.getElementById('view-' + tabId).classList.add('active-view');
-            document.getElementById('nav-' + tabId).classList.add('active');
+            document.getElementById('tab-' + tabId).classList.add('active-tab');
         }
 
         function startLab(name, ip) {
@@ -572,6 +680,5 @@
             }, 300);
         });
     </script>
-
 </body>
 </html>
